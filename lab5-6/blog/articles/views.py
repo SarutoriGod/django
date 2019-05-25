@@ -24,9 +24,12 @@ def create_post(request):
 			'title': request.POST['title']
 			}
 			if form['text'] and form['title']:
-				Article.objects.create(text=form['text'], title=form['title'], author=request.user)
-				article = Article.objects.get(title=form['title'])
-				return redirect('get_article', article.id)
+				if len(Article.objects.filter(title=form['title'])) > 0:
+					raise Http404
+				else:
+					Article.objects.create(text=form['text'], title=form['title'], author=request.user)
+					article = Article.objects.get(title=form['title'])
+					return redirect('get_article', article.id)
 			else:
 				form['errors'] = u"Не все поля заполнены"
 				return render(request, 'create_post.html', {'form': form})
