@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}/static/index.css">
+{% for post in post %}
+<title>{{ post.author.username }}</title>
+<div class="post">
+	<h2 class="post-title"> {{ post.title }}</h2>
+	<div class="post-info">
+		<div class="article-author"> Автор - {{ post.author.username }}</div>
+		<div class="article-created-date"> Создано {{ post.created_date }}</div>
+	</div>
+	<p class="post-text"> {{ post.get_excerpt }}</p>
+</div>
+{% endfor %}
+{% endblock %}
